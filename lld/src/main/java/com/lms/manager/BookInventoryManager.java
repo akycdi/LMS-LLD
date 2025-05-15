@@ -16,6 +16,46 @@ public class BookInventoryManager {
         return booksByIsbn.get(isbn);
     }
 
+    public List<Book> getBooksByTitle(String title) {
+        List<Book> books = new ArrayList<>();
+        for (Book book : booksByIsbn.values()) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                books.add(book);
+            }
+        }
+        return books;
+    }
+
+    public List<Book> getBooksByAuthor(String author) {
+        List<Book> books = new ArrayList<>();
+        for (Book book : booksByIsbn.values()) {
+            if (book.getAuthor().equalsIgnoreCase(author)) {
+                books.add(book);
+            }
+        }
+        return books;
+    }
+
+    public Book searchBookByTitle(String title) {
+        for (Book book : booksByIsbn.values()) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                return book;
+            }
+        }
+        System.out.println("No book found with title: " + title);
+        return null;
+    }
+
+    public Book searchBookByAuthor(String author) {
+        for (Book book : booksByIsbn.values()) {
+            if (book.getAuthor().equalsIgnoreCase(author)) {
+                return book;
+            }
+        }
+        System.out.println("No book found with author: " + author);
+        return null;
+    }
+
     public void addBook(Book book) {
         if (booksByIsbn.containsKey(book.getIsbn())) {
             System.out.println("Already exists: " + book.getIsbn());
@@ -25,7 +65,6 @@ public class BookInventoryManager {
         }
     }
 
-    //update book
     public void updateBook(Integer isbn, String newTitle, String newAuthor, int newYear) {
         Book book = booksByIsbn.get(isbn);
         if (book != null) {
@@ -38,7 +77,6 @@ public class BookInventoryManager {
         }
     }
 
-    //remove book
     public void removeBook(Integer isbn) {
         Book removed = booksByIsbn.remove(isbn);
         if (removed != null) {
