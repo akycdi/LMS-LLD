@@ -29,3 +29,15 @@ This project involves designing and implementing a Library Management System in 
 - **Object-Oriented Programming (OOP)**: The system is designed using OOP concepts such as encapsulation, inheritance, and polymorphism.
 - **SOLID Principles**: Ensures scalability, maintainability, and flexibility of the system.
 - **Design Patterns**: Incorporates appropriate design patterns to solve common problems effectively.
+
+
+
+## Initial design
+
+```
+com.lms
+├── entity  - Book, Patron
+├── manager - BookInventoryManager, PatronManager, LendingManager
+├── LibraryApp  - Main entry point to the application
+
+```
