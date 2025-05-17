@@ -13,7 +13,6 @@ public class BookServiceImplements implements BookService {
     @Override
     public void addBook(Book book) {
         books.add(book);
-        System.out.println("Book added: " + book.getTitle());
     }
 
     @Override
@@ -54,7 +53,7 @@ public class BookServiceImplements implements BookService {
         if (book != null) {
             book.setTitle(newTitle);
             book.setAuthor(newAuthor);
-            book.setYear(newYear);
+            book.setPublicationYear(newYear);
             System.out.println("Book updated: " + book.getTitle());
         }
     }
