@@ -32,12 +32,4 @@ This project involves designing and implementing a Library Management System in 
 
 
 
-## Initial design
 
-```
-com.lms
-├── entity  - Book, Patron
-├── manager - BookInventoryManager, PatronManager, LendingManager
-├── LibraryApp  - Main entry point to the application
-
-```
