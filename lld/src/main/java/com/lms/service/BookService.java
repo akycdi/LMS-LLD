@@ -23,4 +23,10 @@ public interface BookService {
     public Book searchBookByTitle(String title);
 
     public Book searchBookByAuthor(String author);
+
+    List<Book> getBorrowedBooks();
+
+    List<Book> getAvailableBooks();
+
+    List<Book> getBooksByPublicationYear(int year);
 }

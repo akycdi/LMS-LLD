@@ -31,5 +31,8 @@ This project involves designing and implementing a Library Management System in 
 - **Design Patterns**: Incorporates appropriate design patterns to solve common problems effectively.
 
 
+## Example output of one factor
+![Output Image](image.png)
+
 
 

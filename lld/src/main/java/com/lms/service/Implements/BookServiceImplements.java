@@ -53,7 +53,7 @@ public class BookServiceImplements implements BookService {
         if (book != null) {
             book.setTitle(newTitle);
             book.setAuthor(newAuthor);
-            book.setPublicationYear(newYear);
+            book.setYear(newYear);
             System.out.println("Book updated: " + book.getTitle());
         }
     }
@@ -83,4 +83,37 @@ public class BookServiceImplements implements BookService {
         List<Book> found = getBooksByAuthor(author);
         return found.isEmpty() ? null : found.get(0);
     }
+
+     @Override
+     public List<Book> getAvailableBooks() {
+         List<Book> availableBooks = new ArrayList<>();
+         for (Book book : books) {
+             if (book.isAvailable()) {
+                 availableBooks.add(book);
+             }
+         }
+         return availableBooks;
+     }
+ 
+     @Override
+     public List<Book> getBorrowedBooks() {
+         List<Book> borrowedBooks = new ArrayList<>();
+         for (Book book : books) {
+             if (!book.isAvailable()) {
+                 borrowedBooks.add(book);
+             }
+         }
+         return borrowedBooks;
+     }
+
+     @Override
+     public List<Book> getBooksByPublicationYear(int year) {
+            List<Book> booksByYear = new ArrayList<>();
+            for (Book book : books) {
+                if (book.getYear() == year) {
+                    booksByYear.add(book);
+                }
+            }
+            return booksByYear;
+     }
 }

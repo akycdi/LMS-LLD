@@ -40,7 +40,6 @@ public class Patron {
         this.email = email;
     }
 
-    // Methods to update borrowing history
     public void addBorrowedBook(Book book) {
         borrowingHistory.add(book);
     }

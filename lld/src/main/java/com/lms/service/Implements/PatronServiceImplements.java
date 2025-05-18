@@ -48,12 +48,18 @@ public class PatronServiceImplements implements PatronService {
         return (patron != null) ? patron.getBorrowingHistory() : new ArrayList<>();
     }
 
+    
     @Override
     public void recordBorrowing(int patronId, Book book) {
         Patron patron = getPatronById(patronId);
         if (patron != null) {
-            patron.addBorrowedBook(book);
-            System.out.println("Patron " + patron.getName() + " borrowed book: " + book.getTitle());
+            if (book.isAvailable()) {
+                book.setAvailable(false);
+                patron.addBorrowedBook(book);
+                System.out.println("Patron " + patron.getName() + " borrowed book: " + book.getTitle());
+            } else {
+                System.out.println("Book " + book.getTitle() + " is currently not available.");
+            }
         } else {
             System.out.println("Patron with id " + patronId + " not found.");
         }
@@ -63,8 +69,13 @@ public class PatronServiceImplements implements PatronService {
     public void returnBook(int patronId, Book book) {
         Patron patron = getPatronById(patronId);
         if (patron != null) {
-            patron.removeBorrowedBook(book);
-            System.out.println("Patron " + patron.getName() + " returned book: " + book.getTitle());
+            if (!book.isAvailable()) {
+                book.setAvailable(true);
+                patron.removeBorrowedBook(book);
+                System.out.println("Patron " + patron.getName() + " returned book: " + book.getTitle());
+            } else {
+                System.out.println("Book " + book.getTitle() + " was not borrowed.");
+            }
         } else {
             System.out.println("Patron with id " + patronId + " not found.");
         }
