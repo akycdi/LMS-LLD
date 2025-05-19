@@ -1,32 +1,58 @@
 package com.lms.service;
 
-import com.lms.entity.Book;
+import com.lms.model.Book;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-public interface BookService {
+public class BookService {
+    private final Map<String, Book> books = new HashMap<>();
 
-    public void addBook(Book book);
+    public void addBook(Book book) {
+        if (book == null) {
+            throw new IllegalArgumentException("Book cannot be null");
+        }
+        if (books.containsKey(book.getIsbn())) {
+            throw new IllegalArgumentException("Book with ISBN already exists: " + book.getIsbn());
+        }
+        books.put(book.getIsbn(), book);
+    }
 
-    Book getBookByIsbn(Integer isbn);
+    public void removeBook(String isbn) {
+        if (!books.containsKey(isbn)) {
+            throw new NoSuchElementException("No book found with ISBN: " + isbn);
+        }
+        books.remove(isbn);
+    }
 
-    List<Book> getBooksByTitle(String title);
+    public void updateBook(String isbn, Book updatedBook) {
+        if (!books.containsKey(isbn)) {
+            throw new NoSuchElementException("No book found with ISBN: " + isbn);
+        }
+        books.put(isbn, updatedBook);
+    }
 
-    List<Book> getBooksByAuthor(String author);
+    public Book findBookByIsbn(String isbn) {
+        Book book = books.get(isbn);
+        if (book == null) {
+            throw new NoSuchElementException("No book found with ISBN: " + isbn);
+        }
+        return book;
+    }
 
-    void updateBook(Integer isbn, String newTitle, String newAuthor, int newYear);
+    public List<Book> searchByTitle(String title) {
+        return books.values().stream()
+                .filter(book -> book.getTitle().equalsIgnoreCase(title))
+                .collect(Collectors.toList());
+    }
 
-    void removeBook(Integer isbn);
+    public List<Book> searchByAuthor(String author) {
+        return books.values().stream()
+                .filter(book -> book.getAuthor().equalsIgnoreCase(author))
+                .collect(Collectors.toList());
+    }
 
-    public List<Book> getAllBooks();
-
-    public Book searchBookByTitle(String title);
-
-    public Book searchBookByAuthor(String author);
-
-    List<Book> getBorrowedBooks();
-
-    List<Book> getAvailableBooks();
-
-    List<Book> getBooksByPublicationYear(int year);
+    public List<Book> getAllBooks() {
+        return new ArrayList<>(books.values());
+    }
 }
