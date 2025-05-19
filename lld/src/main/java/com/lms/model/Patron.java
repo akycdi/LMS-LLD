@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Patron {
-
     private final String id;
     private String name;
     private final List<LendingRecord> history = new ArrayList<>();
@@ -59,8 +58,6 @@ public class Patron {
         return "Patron{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", history=" + history +
-                ", currentBorrowedBooks=" + currentBorrowedBooks +
                 '}';
     }
 }

@@ -1,53 +1,18 @@
 package com.lms.service;
 
-import com.lms.model.LendingRecord;
 import com.lms.model.Patron;
+import java.util.List;
 
-import java.util.*;
+public interface PatronService {
+    void registerPatron(Patron patron);
 
-public class PatronService {
-    private final Map<String, Patron> patrons = new HashMap<>();
+    Patron findPatronById(String id);
 
-    public void registerPatron(Patron patron) {
-        if (patron == null) {
-            throw new IllegalArgumentException("Patron cannot be null");
-        }
-        if (patrons.containsKey(patron.getId())) {
-            throw new IllegalArgumentException("Patron already exists with ID: " + patron.getId());
-        }
-        patrons.put(patron.getId(), patron);
-    }
+    void updatePatronName(String id, String newName);
 
-    public Patron findPatronById(String id) {
-        Patron patron = patrons.get(id);
-        if (patron == null) {
-            throw new NoSuchElementException("No patron found with ID: " + id);
-        }
-        return patron;
-    }
+    void removePatron(String id);
 
-    public void updatePatronName(String id, String newName) {
-        Patron patron = findPatronById(id);
-        patron.setName(newName);
-    }
+    List<Patron> getAllPatrons();
 
-    public void removePatron(String id) {
-        if (!patrons.containsKey(id)) {
-            throw new NoSuchElementException("No patron found with ID: " + id);
-        }
-        patrons.remove(id);
-    }
-
-    public List<Patron> getAllPatrons() {
-        return new ArrayList<>(patrons.values());
-    }
-
-    public String getBorrowingHistory(String string) {
-        Patron patron = findPatronById(string);
-        StringBuilder history = new StringBuilder();
-        for (LendingRecord record : patron.getHistory()) {
-            history.append(record.toString()).append("\n");
-        }
-        return history.toString();
-    }
+    String getBorrowingHistory(String id);
 }

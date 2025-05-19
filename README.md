@@ -1,38 +1,66 @@
-# Library Management System - Low-Level Design Problem
-
-This project involves designing and implementing a Library Management System in Java. The system aims to assist librarians in efficiently managing books, patrons, and lending processes. The solution demonstrates the application of Object-Oriented Programming (OOP), adherence to SOLID principles, and the use of relevant design patterns.
-
+# Library Management System
+Library Management System - Low-Level Design Problem
 ## Features
 
-### Book Management
-- **Book Class**: Represents a book with attributes such as title, author, ISBN, and publication year.
-- **Inventory Operations**:
-    - Add, remove, and update books in the library inventory.
-    - Search for books by title, author, or ISBN.
+### Core Features
+- **Book Management**
+  - Add, remove, update books
+  - Search by title, author, or ISBN
+  - Track available copies
+- **Patron Management**
+  - Register and manage patrons
+  - Track borrowing history
+- **Lending Process**
+  - Checkout and return books
+  - Configurable lending rules
+- **Inventory Management**
+  - Real-time tracking of available books
+  - Borrowing history
 
-### Patron Management
-- **Patron Class**: Represents library members with relevant details.
-- **Patron Operations**:
-    - Add new patrons and update their information.
-    - Track borrowing history for each patron.
+## Technical Implementation
 
-### Lending Process
-- **Checkout and Return**:
-    - Implement book checkout functionality.
-    - Manage book returns and update inventory accordingly.
+### Design Patterns
+- **Strategy Pattern**: Flexible lending rules
+- **Dependency Injection**: Constructor-based service injection
 
-### Inventory Management
-- **Availability Tracking**:
-    - Maintain records of available and borrowed books.
-
-## Design Principles
-- **Object-Oriented Programming (OOP)**: The system is designed using OOP concepts such as encapsulation, inheritance, and polymorphism.
-- **SOLID Principles**: Ensures scalability, maintainability, and flexibility of the system.
-- **Design Patterns**: Incorporates appropriate design patterns to solve common problems effectively.
-
-
-## Example output of one factor
-![Output Image](image.png)
-
-
-
+### Architecture
+```mermaid
+classDiagram
+    class Book {
+        -String title
+        -String author
+        -String isbn
+        -int publicationYear
+        -int totalCopies
+        -int availableCopies
+    }
+    
+    class Patron {
+        -String id
+        -String name
+        -List~LendingRecord~ history
+    }
+    
+    class LendingStrategy {
+        <<interface>>
+        +checkout(Book, Patron)
+        +returnBook(Book, Patron)
+    }
+    
+    class DefaultLendingStrategy {
+        +checkout(Book, Patron)
+        +returnBook(Book, Patron)
+    }
+    
+    class LibraryApplication {
+        -BookService bookService
+        -PatronService patronService
+        -LendingService lendingService
+    }
+    
+    LendingStrategy <|.. DefaultLendingStrategy
+    LibraryApplication --> BookService
+    LibraryApplication --> PatronService
+    LibraryApplication --> LendingService
+    Patron --> Book
+```

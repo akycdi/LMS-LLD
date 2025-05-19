@@ -1,58 +1,20 @@
 package com.lms.service;
 
 import com.lms.model.Book;
+import java.util.List;
 
-import java.util.*;
-import java.util.stream.Collectors;
+public interface BookService {
+    void addBook(Book book);
 
-public class BookService {
-    private final Map<String, Book> books = new HashMap<>();
+    void removeBook(String isbn);
 
-    public void addBook(Book book) {
-        if (book == null) {
-            throw new IllegalArgumentException("Book cannot be null");
-        }
-        if (books.containsKey(book.getIsbn())) {
-            throw new IllegalArgumentException("Book with ISBN already exists: " + book.getIsbn());
-        }
-        books.put(book.getIsbn(), book);
-    }
+    void updateBook(String isbn, Book updatedBook);
 
-    public void removeBook(String isbn) {
-        if (!books.containsKey(isbn)) {
-            throw new NoSuchElementException("No book found with ISBN: " + isbn);
-        }
-        books.remove(isbn);
-    }
+    Book findBookByIsbn(String isbn);
 
-    public void updateBook(String isbn, Book updatedBook) {
-        if (!books.containsKey(isbn)) {
-            throw new NoSuchElementException("No book found with ISBN: " + isbn);
-        }
-        books.put(isbn, updatedBook);
-    }
+    List<Book> searchByTitle(String title);
 
-    public Book findBookByIsbn(String isbn) {
-        Book book = books.get(isbn);
-        if (book == null) {
-            throw new NoSuchElementException("No book found with ISBN: " + isbn);
-        }
-        return book;
-    }
+    List<Book> searchByAuthor(String author);
 
-    public List<Book> searchByTitle(String title) {
-        return books.values().stream()
-                .filter(book -> book.getTitle().equalsIgnoreCase(title))
-                .collect(Collectors.toList());
-    }
-
-    public List<Book> searchByAuthor(String author) {
-        return books.values().stream()
-                .filter(book -> book.getAuthor().equalsIgnoreCase(author))
-                .collect(Collectors.toList());
-    }
-
-    public List<Book> getAllBooks() {
-        return new ArrayList<>(books.values());
-    }
+    List<Book> getAllBooks();
 }

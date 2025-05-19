@@ -68,7 +68,7 @@ public class Book {
 
     public void setAvailableCopies(int availableCopies) {
         if (availableCopies < 0 || availableCopies > totalCopies)
-            throw new IllegalArgumentException("Available copies must be >= 0 and <= total copies");
+            throw new IllegalArgumentException("Available copies must be between 0 and total copies");
         this.availableCopies = availableCopies;
     }
 
@@ -83,5 +83,4 @@ public class Book {
                 ", availableCopies=" + availableCopies +
                 '}';
     }
-
 }
